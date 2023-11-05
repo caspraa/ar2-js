@@ -17,6 +17,7 @@ const setProjectData = async (values) => {
     try {
         const response = await axios.post("https://us-central1-model-creator-poc.cloudfunctions.net/generate-ar-page", values);
         console.log(response);
+        console.log('data from cloud function recieved')
 
         // Extract the GCS URL from the response
         const gcsImageUrl = response.data.qr_bucket_url;
@@ -157,7 +158,9 @@ const Form = () => {
           height: 420,
           borderRadius:8,
           bgcolor: colors.white[900]}
-        }></Box>
+        }>
+
+        </Box>
         </Box>
        
       </Box>
