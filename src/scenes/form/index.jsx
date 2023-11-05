@@ -17,8 +17,15 @@ const Form = () => {
   const colors = tokens(theme.palette.mode);
 
   const handleFormSubmit = async (values) => {
+    values = {
+        "name": values.name,
+        "image_url": "asset2.png",
+        "marker_patt_file": "marker.patt",
+        "marker_image_file": "marker.png"
+    };
     try {
       const response = await axios.post("https://us-central1-model-creator-poc.cloudfunctions.net/generate-ar-page", values);
+      console.log(response)
       console.log("Data from Cloud Function received");
       console.log(response.data.qr_bucket_url)
       // Update imageUrl with the response
@@ -129,7 +136,6 @@ const Form = () => {
           bgcolor: colors.blue[300]}
         }>
         <Box display="flex" sx={{ mt: "0px", padding: "5px", width: 420, height: 420, borderRadius: 8, bgcolor: colors.white[900] }}>
-        {/* Display the image from imageUrl */}
         {imageUrl && <img src={imageUrl} alt="QR Code" />}
       </Box>
         </Box>
