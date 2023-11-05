@@ -17,12 +17,14 @@ const Form = () => {
   const colors = tokens(theme.palette.mode);
 
   const handleFormSubmit = async (values) => {
+    console.log(values)
     values = {
-        "name": values.name,
+        "name": values.firstName,
         "image_url": "asset2.png",
         "marker_patt_file": "marker.patt",
         "marker_image_file": "marker.png"
     };
+    console.log(values)
     try {
       const response = await axios.post("https://us-central1-model-creator-poc.cloudfunctions.net/generate-ar-page", values);
       console.log(response)
@@ -135,7 +137,7 @@ const Form = () => {
           height: 800,
           bgcolor: colors.blue[300]}
         }>
-        <Box display="flex" sx={{ mt: "0px", padding: "5px", width: 420, height: 420, borderRadius: 8, bgcolor: colors.white[900] }}>
+        <Box display="flex" sx={{ mt: "0px", padding: "10px", width: 420, height: 420, borderRadius: 8, bgcolor: colors.white[900] }}>
         {imageUrl && <img src={imageUrl} alt="QR Code" />}
       </Box>
         </Box>
