@@ -20,7 +20,7 @@ const Form = () => {
     try {
       const response = await axios.post("https://us-central1-model-creator-poc.cloudfunctions.net/generate-ar-page", values);
       console.log("Data from Cloud Function received");
-      
+      console.log(response.data.qr_bucket_url)
       // Update imageUrl with the response
       setImageUrl(response.data.qr_bucket_url);
       
