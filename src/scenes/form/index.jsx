@@ -6,10 +6,11 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../components/Header";
 import { tokens } from "../../themes";
 import axios from "axios";
+const image_url = {}
 const setProjectData = async (values) => {
     values = {
         "name": values.name,
-        "image_url": "asset.png",
+        "image_url": "asset2.png",
         "marker_patt_file": "marker.patt",
         "marker_image_file": "marker.png"
     };
@@ -20,19 +21,9 @@ const setProjectData = async (values) => {
         console.log('data from cloud function recieved')
 
         // Extract the GCS URL from the response
-        const gcsImageUrl = response.data.qr_bucket_url;
-
-        // Fetch the image from the GCS bucket
-        const imageResponse = await axios.get(gcsImageUrl, { responseType: 'arraybuffer' });
-
-        // Convert the image data to a base64 data URL
-        const imageBase64 = Buffer.from(imageResponse.data, 'binary').toString('base64');
-        const imageSrc = `data:image/png;base64,${imageBase64}`;
-
-        // Display the image in your application (e.g., using an <img> element)
-        const imgElement = document.createElement('img');
-        imgElement.src = imageSrc;
-        document.body.appendChild(imgElement);
+        image_url = response.data.qr_bucket_url;
+        
+        return response.data.qr_bucket_url
 
     } catch (e) {
         console.log(e);
@@ -49,7 +40,8 @@ const Form = () => {
   
   const handleFormSubmit = (values) => {
     console.log(values);
-    setProjectData(values);
+    console.log(setProjectData(values))
+   
     console.log("hited")
   };
 
@@ -159,7 +151,7 @@ const Form = () => {
           borderRadius:8,
           bgcolor: colors.white[900]}
         }>
-
+        <img src={image_url}/>
         </Box>
         </Box>
        
