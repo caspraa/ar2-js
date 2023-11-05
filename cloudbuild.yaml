@@ -11,7 +11,7 @@ steps:
   - 'run'
   - 'deploy'
   - 'ar2-js' # Change to your Cloud Run service name
-  - '--image=gcr.io/$PROJECT_ID/modelcrafter_frontend:$COMMIT_SHA'
+  - '--image=gcr.io/$PROJECT_ID/ar2-js:$COMMIT_SHA'
   - '--platform=managed'
   - '--region=us-central1' # Replace with your desired region
   - '--allow-unauthenticated' # Remove this line if you want to require authentication
