@@ -6,7 +6,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../components/Header";
 import { tokens } from "../../themes";
 import axios from "axios";
-const image_url = {}
+const [imageUrl, setImageUrl] = useState(""); // Initialize imageUrl as an empty string
 const setProjectData = async (values) => {
     values = {
         "name": values.name,
@@ -21,7 +21,7 @@ const setProjectData = async (values) => {
         console.log('data from cloud function recieved')
 
         // Extract the GCS URL from the response
-        image_url = response.data.qr_bucket_url;
+        setImageUrl(response.data.qr_bucket_url);
         
         return response.data.qr_bucket_url
 
@@ -38,9 +38,9 @@ const Form = () => {
   console.log('hi')
 
   
-  const handleFormSubmit = (values) => {
+  const handleFormSubmit = async (values) => {
     console.log(values);
-    console.log(setProjectData(values))
+    const imageUrl = await setProjectData(values);
    
     console.log("hited")
   };
@@ -151,7 +151,7 @@ const Form = () => {
           borderRadius:8,
           bgcolor: colors.white[900]}
         }>
-        <img src={image_url}/>
+        <img src={imageUrl}/>
         </Box>
         </Box>
        
