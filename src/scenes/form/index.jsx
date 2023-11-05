@@ -1,51 +1,34 @@
+import React, { useState } from "react";
 import { Box, Button, TextField } from "@mui/material";
 import { Formik } from "formik";
 import * as yup from "yup";
 import { useTheme } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../components/Header";
-import { tokens } from "../../themes";
 import axios from "axios";
-import React, { useState } from "react";
-const [imageUrl, setImageUrl] = useState(""); // Initialize imageUrl as an empty string
-const setProjectData = async (values) => {
-    values = {
-        "name": values.name,
-        "image_url": "asset2.png",
-        "marker_patt_file": "marker.patt",
-        "marker_image_file": "marker.png"
-    };
-
-    try {
-        const response = await axios.post("https://us-central1-model-creator-poc.cloudfunctions.net/generate-ar-page", values);
-        console.log(response);
-        console.log('data from cloud function recieved')
-
-        // Extract the GCS URL from the response
-        setImageUrl(response.data.qr_bucket_url);
-        
-        return response.data.qr_bucket_url
-
-    } catch (e) {
-        console.log(e);
-    }
-};
-
+import { tokens } from "../../themes";
 
 const Form = () => {
-  const isNonMobile = useMediaQuery("(min-width:600px)");
+  const isNonMobile = useMediaQuery("(min-width:600px");
   const theme = useTheme();
+
+  // Define imageUrl and setImageUrl using useState
+  const [imageUrl, setImageUrl] = useState("");
   const colors = tokens(theme.palette.mode);
-  console.log('hi')
 
-  
   const handleFormSubmit = async (values) => {
-    console.log(values);
-    const imageUrl = await setProjectData(values);
-   
-    console.log("hited")
+    try {
+      const response = await axios.post("https://us-central1-model-creator-poc.cloudfunctions.net/generate-ar-page", values);
+      console.log("Data from Cloud Function received");
+      
+      // Update imageUrl with the response
+      setImageUrl(response.data.qr_bucket_url);
+      
+      console.log("Request successful");
+    } catch (e) {
+      console.log(e);
+    }
   };
-
   return (
     <Box display = 'flex' sx={{
         flexDirection: 'row',
@@ -145,15 +128,10 @@ const Form = () => {
           height: 800,
           bgcolor: colors.blue[300]}
         }>
-        <Box display='flex' sx={{
-          mt: '0px',
-          width: 420,
-          height: 420,
-          borderRadius:8,
-          bgcolor: colors.white[900]}
-        }>
-        <img src={imageUrl}/>
-        </Box>
+        <Box display="flex" sx={{ mt: "0px", padding: "5px", width: 420, height: 420, borderRadius: 8, bgcolor: colors.white[900] }}>
+        {/* Display the image from imageUrl */}
+        {imageUrl && <img src={imageUrl} alt="QR Code" />}
+      </Box>
         </Box>
        
       </Box>
