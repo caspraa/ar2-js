@@ -41,11 +41,13 @@ const Form = () => {
   return (
     <Box display = 'flex' sx={{
         flexDirection: 'row',
+        height:'100%'
         }}>
         <Box display='flex' padding = '20px'sx={{
           margin:10,
           mt:15,
-          width: '40%',
+          mb: 15,
+          width: '100%',
           flexDirection: 'column',
           borderRadius: 10,
           bgcolor: colors.white[900]
@@ -129,12 +131,12 @@ const Form = () => {
       </Box>
       </Box >
       <Box display='flex' sx={{
-          justifyContent: 'center',
-          flexDirection: 'column',
+          justifyContent:"center",
+          alignItems:"center",
           mt: '0px',
           padding: 25,
-          width: 780,
-          height: 800,
+          width: '100%',
+          height: "100%",
           bgcolor: colors.blue[300]}
         }>
         <Box display="flex" sx={{ mt: "0px", padding: "10px", width: 420, height: 420, borderRadius: 8, bgcolor: colors.white[900] }}>
