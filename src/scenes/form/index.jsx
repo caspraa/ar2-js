@@ -20,7 +20,7 @@ const Form = () => {
     console.log(values)
     values = {
         "name": values.firstName,
-        "image_url": "asset2.png",
+        "image_url": "asset4.png",
         "marker_patt_file": "marker.patt",
         "marker_image_file": "marker.png"
     };
