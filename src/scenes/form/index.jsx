@@ -20,6 +20,8 @@ const Form = () => {
     console.log(values)
     values = {
         "name": values.firstName,
+        "email": values.email,
+        "number": values.contact,
         "image_url": "asset4.png",
         "marker_patt_file": "marker.patt",
         "marker_image_file": "marker.png"
@@ -91,7 +93,7 @@ const Form = () => {
                 helperText={touched.firstName && errors.firstName}
                 sx={{ gridColumn: "span 4" }}
               />
-
+                
               <TextField
                 fullWidth
                 variant="filled"
