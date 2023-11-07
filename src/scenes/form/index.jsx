@@ -142,9 +142,24 @@ const Form = () => {
                 helperText={touched.contact && errors.contact}
                 sx={{ gridColumn: "span 4" }}
               />
-              <input id="file" name="file" type="file" onChange={(event) => {
-                 setFieldValue("file", event.currentTarget.files[0]);
-                }} />
+              <Box display="flex" sx={{ gridColumn: "span 4" }}>
+              <input
+                  accept="image/*"
+                  style={{ display: 'none' }}
+                  id="file"
+                  onChange={(event) => {
+                    setFieldValue("file", event.currentTarget.files[0]);
+                   }}
+                  multiple
+                  type="file"
+                />
+                <label htmlFor="file" >
+                  <Button variant="raised" component="span" >
+                    Upload User Image
+                  </Button>
+                </label> 
+                </Box>
+              
             </Box>
             <Box display="flex" justifyContent="end" mt="40px">
               <Button type="submit" color="primary" variant="contained">
