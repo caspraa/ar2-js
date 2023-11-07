@@ -7,11 +7,12 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../components/Header";
 import axios from "axios";
 import { tokens } from "../../themes";
+import CircularProgress from '@mui/material/CircularProgress';
 
 const Form = () => {
   const isNonMobile = useMediaQuery("(min-width:600px");
   const theme = useTheme();
-
+  const [loading, setLoading] = useState(false);
   // Define imageUrl and setImageUrl using useState
   const [imageUrl, setImageUrl] = useState("");
   const colors = tokens(theme.palette.mode);
@@ -30,6 +31,7 @@ const Form = () => {
   }
 
   const handleFormSubmit = async (values) => {
+    setLoading(true); 
     console.log(values.file.name)
     const formData = new FormData();
     formData.append('file', values.file);
@@ -59,7 +61,9 @@ const Form = () => {
       console.log("Request successful");
     } catch (e) {
       console.log(e);
-    }
+    }finally {
+        setLoading(false); // Set loading back to false when image is loaded or request is completed
+      }
   };
   return (
     <Box display = 'flex' sx={{
@@ -96,7 +100,7 @@ const Form = () => {
           <form onSubmit={handleSubmit}>
             <Box
               display="grid"
-              gap="40px"
+              gap="25px"
               gridTemplateColumns="repeat(4, minmax(0, 1fr))"
               sx={{
                 "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
@@ -161,7 +165,7 @@ const Form = () => {
                 </Box>
               
             </Box>
-            <Box display="flex" justifyContent="end" mt="40px">
+            <Box display="flex" justifyContent="end" mt="10px">
               <Button type="submit" color="primary" variant="contained">
                 Create New Tag
               </Button>
@@ -181,8 +185,12 @@ const Form = () => {
           height: "100%",
           bgcolor: colors.blue[300]}
         }>
-        <Box display="flex" sx={{ mt: "0px", padding: "10px", width: 420, height: 420, borderRadius: 8, bgcolor: colors.white[900] }}>
-        {imageUrl && <img src={imageUrl} alt="QR Code" />}
+        <Box display="flex" alignItems="center" justifyContent="center" sx={{ mt: "0px", padding: "10px", width: 420, height: 420, borderRadius: 8, bgcolor: colors.white[900] }}>
+        {loading ? (
+            <CircularProgress />
+          ) : imageUrl ? (
+            <img src={imageUrl} alt="QR Code" />
+          ) : null}
       </Box>
         </Box>
        
