@@ -185,7 +185,7 @@ const Form = () => {
           height: "100%",
           bgcolor: colors.blue[300]}
         }>
-        <Box display="flex" alignItems="center" justifyContent="center" sx={{ mt: "0px", width: 420, height: 420, borderRadius: 8, bgcolor: colors.white[900] }}>
+        <Box display="flex" alignItems="center" justifyContent="center" sx={{ mt: "0px", width: 420, height: 420, borderRadius: 8, bgcolor: colors.blue[500] }}>
         {loading ? (
             <CircularProgress />
           ) : imageUrl ? (
