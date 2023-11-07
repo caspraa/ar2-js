@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Box, Button, TextField } from "@mui/material";
-import { Formik } from "formik";
+import { Box, Button, Input, TextField } from "@mui/material";
+import { Field, Formik } from "formik";
 import * as yup from "yup";
 import { useTheme } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -16,17 +16,38 @@ const Form = () => {
   const [imageUrl, setImageUrl] = useState("");
   const colors = tokens(theme.palette.mode);
 
+  function readFileAsBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        resolve(event.target.result.split(',')[1]); // Extract the base64 content
+      };
+      reader.onerror = (error) => {
+        reject(error);
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
   const handleFormSubmit = async (values) => {
+    console.log(values.file.name)
+    const formData = new FormData();
+    formData.append('file', values.file);
     console.log(values)
+    const selectedFile = values.file;
+    const fileContent = await readFileAsBase64(values.file)
+    console.log(fileContent)
+    const gcsFileName = selectedFile.name;
     values = {
         "name": values.firstName,
         "email": values.email,
         "number": values.contact,
-        "image_url": "asset4.png",
+        "image_url": gcsFileName,
+        "fileContent": fileContent,
         "marker_patt_file": "marker.patt",
         "marker_image_file": "marker.png"
     };
-    console.log(values)
+
     try {
       const response = await axios.post("https://us-central1-model-creator-poc.cloudfunctions.net/generate-ar-page", values);
       console.log(response)
@@ -66,6 +87,7 @@ const Form = () => {
         {({
           values,
           errors,
+          setFieldValue,
           touched,
           handleBlur,
           handleChange,
@@ -120,6 +142,9 @@ const Form = () => {
                 helperText={touched.contact && errors.contact}
                 sx={{ gridColumn: "span 4" }}
               />
+              <input id="file" name="file" type="file" onChange={(event) => {
+                 setFieldValue("file", event.currentTarget.files[0]);
+                }} />
             </Box>
             <Box display="flex" justifyContent="end" mt="40px">
               <Button type="submit" color="primary" variant="contained">
@@ -162,10 +187,11 @@ const checkoutSchema = yup.object().shape({
     .required("required"),
 });
 const initialValues = {
-  firstName: "vishnu",
+  firstName: "",
   lastName: "",
   email: "",
   contact: "",
+  file: ""
 };
 
 export default Form;
