@@ -180,11 +180,12 @@ const Form = () => {
           justifyContent:"center",
           alignItems:"center",
           mt: '0px',
+          padding: 25,
           width: '100%',
           height: "100%",
           bgcolor: colors.blue[300]}
         }>
-        <Box display="flex" alignItems="center" justifyContent="center" sx={{ mt: "0px", padding: "10px", width: 420, height: 420, borderRadius: 8, bgcolor: colors.white[900] }}>
+        <Box display="flex" alignItems="center" justifyContent="center" sx={{ mt: "0px", width: 420, height: 420, borderRadius: 8, bgcolor: colors.white[900] }}>
         {loading ? (
             <CircularProgress />
           ) : imageUrl ? (
