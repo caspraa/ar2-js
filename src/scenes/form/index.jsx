@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { Box, Button, Input, TextField } from "@mui/material";
-import { Field, Formik } from "formik";
+import { Box, Button, Input, TextField ,Typography} from "@mui/material";
+import { Field, Formik ,ErrorMessage} from "formik";
 import * as yup from "yup";
 import { useTheme } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../components/Header";
 import axios from "axios";
 import { tokens } from "../../themes";
+import { test } from 'yup';
 import CircularProgress from '@mui/material/CircularProgress';
 
 const Form = () => {
@@ -157,11 +158,16 @@ const Form = () => {
                   multiple
                   type="file"
                 />
+                {/* Display error message for file field */}
+                
                 <label htmlFor="file" >
                   <Button variant="raised" component="span" >
                     Upload User Image
                   </Button>
                 </label> 
+                <Typography mt="10px" variant="body2" color="error">
+                      <ErrorMessage name="file" />
+                    </Typography>
                 </Box>
               
             </Box>
@@ -208,10 +214,11 @@ const checkoutSchema = yup.object().shape({
     .string()
     .matches(phoneRegExp, "Phone number is not valid")
     .required("required"),
+  file: yup.mixed().required('File is required'),
 });
+
 const initialValues = {
   firstName: "",
-  lastName: "",
   email: "",
   contact: "",
   file: ""
